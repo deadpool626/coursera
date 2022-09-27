@@ -41,5 +41,6 @@ Deployments --->
 		 		create new rs (rsn)
 				rsn creates new pod 
 				depl creates 1 instance of v2 so reduces v1 to 2 instances {required instances specified are 3}
-				depl scales up 
+				depl scales up
+				
 				
