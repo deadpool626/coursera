@@ -7,8 +7,8 @@ Replicasets --->
 		Ex. If the desired pods are 2 and soemhow one the pods is down or we kill it, rs automatically creates another one asap. It might take about a minute. 
 		*How to specify required pods?*
 			kubectl scale deployment hello-world --replicas==3
-																		^
-															 Container Name
+						      ^
+						Container Name
 
 		kubectl get events -> This cmd gives you some previous logs
 		but this above cmd wont sort it. So if you want to sort logs by time : kubectl get events --sort-by=.metadata.creationTimestamp
@@ -23,8 +23,8 @@ Replicasets --->
 Deployments --->
 		Now if we want to launch upgraded version of our application, for that - 
 		kubectl set iamge deployment hello-world-rest-api hello-world-rest-api=Dummy_Image:Test
-																					^										^									^
-																	 Deployement Name			Container Name			Image Name
+						    ^			^	       	    ^
+					      Deployement Name	  Container Name	Image Name
 																	 
 		Here Image is not valid/ Image has errors in it, so ideally applciation should go down. But Kubernetes takes care of it.
 		If you go to applciation, it is still up and running with previous version.
@@ -42,3 +42,4 @@ Deployments --->
 				rsn creates new pod 
 				depl creates 1 instance of v2 so reduces v1 to 2 instances {required instances specified are 3}
 				depl scales up 
+				
