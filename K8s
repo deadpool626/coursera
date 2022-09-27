@@ -1,0 +1,44 @@
+
+			<<<----pod1---->>>         <<<----pod2---->>>														 <<<----pod1---->>>         <<<----pod2---->>>
+	<<<-----------------Replicaset 1----------------->>>											<<<-----------------Replicaset 2----------------->>>
+<<<----------------------------------------------------------Deployment---------------------------------------------------------->>>
+Replicasets --->
+		Replicaset always monitors pods and if no of pods are lesser than specified, it creates new pods. 
+		Ex. If the desired pods are 2 and soemhow one the pods is down or we kill it, rs automatically creates another one asap. It might take about a minute. 
+		*How to specify required pods?*
+			kubectl scale deployment hello-world --replicas==3
+																		^
+															 Container Name
+
+		kubectl get events -> This cmd gives you some previous logs
+		but this above cmd wont sort it. So if you want to sort logs by time : kubectl get events --sort-by=.metadata.creationTimestamp
+		and now we'll get logs in a timely sorted manner.
+
+		kubectl get rs -> gives you list of replicasets present
+		kubectl get rs -o wide -> gives you list with extra detailed information
+
+		Pods is where containers run, can contain one or more containers and provides grouping for the containers. RS ensures asked no of pods are running.
+	
+	
+Deployments --->
+		Now if we want to launch upgraded version of our application, for that - 
+		kubectl set iamge deployment hello-world-rest-api hello-world-rest-api=Dummy_Image:Test
+																					^										^									^
+																	 Deployement Name			Container Name			Image Name
+																	 
+		Here Image is not valid/ Image has errors in it, so ideally applciation should go down. But Kubernetes takes care of it.
+		If you go to applciation, it is still up and running with previous version.
+		
+		Now if we do kubectl get rs -o wide, we'll see 2 different replicasets. One with previous correct image and other one with Dummy_Image. And you can see there are 0 containers in READY state. 
+		 kubectl get pods -o wide will show previous pods and this new failed one.
+		 If we do  kubectl describe pods NAME_OF_FAILED_POD, we'll get details and what gone wrong.
+		 
+		 Now this timewe'll provide correct image
+		 kubectl set iamge deployment hello-world-rest-api hello-world-rest-api=in28min/hello-world-rest-api:0.0.2.RELEASE
+		 At this time, the image is correct so deployment will be successful and new application will be up in a minute. If you launch applcation you'll see updated version.
+		 
+		 Background steps:
+		 		create new rs (rsn)
+				rsn creates new pod 
+				depl creates 1 instance of v2 so reduces v1 to 2 instances {required instances specified are 3}
+				depl scales up 
