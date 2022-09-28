@@ -42,5 +42,21 @@ Deployments --->
 				rsn creates new pod 
 				depl creates 1 instance of v2 so reduces v1 to 2 instances {required instances specified are 3}
 				depl scales up
-				
-				
+				.
+				.
+				.
+				.
+
+Overview of Pods, ReplicaSets, Deployments--->
+	*Pods*
+		Pods is nothing but a wrapper for a set of containers. It has properties like IP address, labels, annotations, etc.
+		
+	*ReplicaSet*
+		It ensures a specific no of pods are always running. It keeps monitoring the pods. Each rs is associated with a different release version of application.
+		
+	*Deployment*
+		It ensures there is zero downtime while shifting from one version to other. There are different strategies of deployments. Default deployment strategy is rolling updates.
+
+
+Services--->
+	In K8s Pods are throw away unit. Pods can be deleted, new may come up. Service is responsible not to affect external user interface while there are background changes going on. Deletion of pods, creating new one, these things should not affect the user interface.	
